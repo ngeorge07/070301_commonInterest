@@ -11,16 +11,25 @@ fetch(url, option)
   .then((res) => res.json())
   .then(gotData);
 function gotData(data) {
-  //console.log(data);
-  data.forEach(showCategoryNav);
+  const myArray = [];
+  data.forEach((el) => {
+    myArray.push(el.beertype);
+  });
+  //const data2 = myArray.filter(distinct);
+  const data2 = [...new Set(myArray)];
+  console.log(data2);
+  data2.forEach(showCategoryNav);
+
+  data.forEach(showAll);
 }
-function showCategoryNav(beers) {
+
+function showCategoryNav(beer) {
   //console.log(beers.beertype);
   const template = document.querySelector("template").content;
   const copy = template.cloneNode(true);
 
-  copy.querySelector("a").textContent = beers.beertype;
-  copy.querySelector("a").href = `productList.html?beertype=${beers.beertype}`;
+  copy.querySelector("a").textContent = beer;
+  copy.querySelector("a").href = `productList.html?beertype=${beer}`;
 
   const cateParent = document.querySelector("#beer-cate-nav");
   const elemParent = cateParent.querySelector("ul");
